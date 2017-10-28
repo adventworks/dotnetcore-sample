@@ -1,0 +1,1 @@
+[<img src="https://myaccountfordemo.visualstudio.com/_apis/public/build/definitions/9ce7920e-6c3e-4985-bde7-5b6dcaaf023f/2/badge"/>](https://myaccountfordemo.visualstudio.com/dotnetcore-sample/_build/index?definitionId=2)
