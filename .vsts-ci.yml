@@ -1,0 +1,14 @@
+# YAML build definition for this app
+# This file is needed only when you want to model your build definitions using YAML
+steps:
+- script: |
+    dotnet restore
+    dotnet build
+    dotnet test dotnetcore-tests/dotnetcore-tests.csproj
+    dotnet publish -o $(Build.ArtifactStagingDirectory)
+
+- task: publishBuildArtifacts@1
+  inputs:
+    PathtoPublish: $(Build.ArtifactStagingDirectory)
+    ArtifactName: drop
+    ArtifactType: Container
