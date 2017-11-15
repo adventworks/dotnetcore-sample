@@ -8,4 +8,4 @@ WORKDIR /app
 # Copy files from the artifact staging folder
 COPY . .
 
-ENTRYPOINT ["dotnet", "dotnetcore-sample.dll"]
+ENTRYPOINT ["dotnet", "dotnetcore-sample/bin/release/netcoreapp2.0/dotnetcore-sample.dll"]
