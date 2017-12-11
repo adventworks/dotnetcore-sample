@@ -12,6 +12,7 @@ namespace dotnetcore_sample
 {
     public class Startup
     {
+        //Comment to trigger a build
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
