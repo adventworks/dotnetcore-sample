@@ -8,5 +8,5 @@ WORKDIR /app
 # Copy files from the artifact staging folder on agent
 COPY dotnetcore-sample/out/dotnetcore-sample .
 
-EXPOSE 5000 80
+WEBSITES_PORT 5000
 ENTRYPOINT ["dotnet", "dotnetcore-sample.dll"]
