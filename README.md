@@ -4,4 +4,5 @@ For information on how to use this repository, see [Build your ASP.NET Core app]
 
 New Change
 Another change
+More Changes
 [<img src="https://interwebit.visualstudio.com/_apis/public/build/definitions/a240d3a8-ffa6-4b47-b498-354aeaa18ebf/15/badge"/>](https://interwebit.visualstudio.com/MyFirstProject/_build/index?definitionId={id})
