@@ -1,3 +1,3 @@
-# Sample ASP.NET Core application for VSTS and TFS docs
+# Build Status from VSTS
 
-For information on how to use this repository, see [Build your ASP.NET Core app](https://docs.microsoft.com/en-us/vsts/build-release/apps/aspnet/build-aspnet-core).
+[![Build Status](https://cahokia.visualstudio.com/_apis/public/build/definitions/98841f3e-3eb2-4873-b77a-f4e3103ee605/1/badge)](https://cahokia.visualstudio.com/Test%20Project/_build/index?definitionId=1)
