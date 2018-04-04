@@ -27,7 +27,7 @@ steps:
 - task: dotNetCoreCLI@1
   inputs:
     command: publish
-    arguments: dotnetcore-sample\dotnetcore-sample.csproj --configuration release --output $(Build.ArtifactStagingDirectory)
+    arguments: dotnetcore-sample/dotnetcore-sample.csproj --configuration release --output $(Build.ArtifactStagingDirectory)
     zipAfterPublish: true
   displayName: dotnet publish
 
