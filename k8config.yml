@@ -19,11 +19,6 @@ spec:
         image: adventworks/dotnetcore-sample
         ports:
         - containerPort: 80
-        resources:
-          requests:
-            cpu: 250m
-          limits:
-            cpu: 500m
 ---
 apiVersion: v1
 kind: Service
