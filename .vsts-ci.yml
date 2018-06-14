@@ -1,39 +1,39 @@
 # YAML build definition for this app
-# This file is needed only when you want to model your build definitions using YAML
-queue: 
-  name: Hosted Linux Preview
-  
+queue: Hosted Linux Preview
+variables:
+  buildConfiguration: 'Release'
+
 steps:
-- task: dotNetCoreCLI@1
+- task: DotNetCoreCLI@2
+  displayName: Restore
   inputs:
     command: restore
     projects: "**/*.csproj"
-  displayName: dotnet restore
 
-- task: dotNetCoreCLI@1
+- task: dotNetCoreCLI@2
+  displayName: Build
   inputs:
     command: build
     projects: "**/*.csproj"
-    arguments: --configuration release
-  displayName: dotnet build
+    arguments: --configuration $(buildConfiguration)
 
-- task: dotNetCoreCLI@1
+- task: dotNetCoreCLI@2
+  displayName: Test
   inputs:
     command: test 
-    projects: "**/*Tests/*.csproj"
-    arguments: --configuration release
-  displayName: dotnet build
+    projects: "**/*[Tt]ests/*.csproj"
+    arguments: --configuration $(buildConfiguration)
 
-- task: dotNetCoreCLI@1
+- task: dotNetCoreCLI@2
+  displayName: Publish
   inputs:
     command: publish
-    arguments: --configuration release --output $(Build.ArtifactStagingDirectory)
+    arguments: --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
     zipAfterPublish: true
-  displayName: dotnet publish
 
 - task: publishBuildArtifacts@1
+  displayName: Publish artifact
   inputs:
     PathtoPublish: $(Build.ArtifactStagingDirectory)
     ArtifactName: drop
     ArtifactType: Container
-  displayName: Publish the artifacts
