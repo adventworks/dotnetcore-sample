@@ -34,3 +34,10 @@ steps:
       arguments: '--configuration $(buildConfiguration) --output $(build.artifactStagingDirectory)'
 
   - task: PublishBuildArtifacts@1
+
+#  - task: AzureRmWebAppDeployment@3
+#    inputs:
+#      azureSubscription: <Azure service endpoint>
+#      WebAppName: <Azure web app>
+#      Package: '$(System.ArtifactsDirectory)/**/*.zip'
+#      TakeAppOfflineFlag: true
