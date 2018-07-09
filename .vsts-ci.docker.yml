@@ -1,0 +1,30 @@
+queue: 'Hosted Linux Preview'
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'restore'
+      projects: '**/*.csproj'
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'build'
+      projects: '**/*.csproj'
+      arguments: '--configuration $(buildConfiguration)'
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'test'
+      projects: '**/*[Tt]ests/*.csproj'
+      arguments: '--configuration $(buildConfiguration)'
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'publish'
+      arguments: '--configuration $(buildConfiguration) --output out'
+      zipAfterPublish: false
+
+# Replace adventworks in the following with the name of your docker id.
+  - script: docker build -f Dockerfile -t adventworks/dotnetcore-sample .
