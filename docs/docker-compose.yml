@@ -2,9 +2,9 @@
 # See http://docs.microsoft.com/vsts/pipelines/languages/docker for more information
 sut:
   build: .
-  dockerfile: Dockerfile.test
+  dockerfile: docs/Dockerfile.test
   links:
     - web
 web:
   build: .
-  dockerfile: ../Dockerfile
+  dockerfile: Dockerfile
