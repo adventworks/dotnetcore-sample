@@ -1,5 +1,8 @@
+# This Dockerfile demonstrates how to use Docker to create an image
+# after a build is produced and tested by VSTS or TFS
+# See http://docs.microsoft.com/vsts/pipelines/languages/docker for more information
+
 # Create a container with the compiled asp.net core app
-# This file is needed only if you plan to package the app as a container in your CI process
 FROM microsoft/aspnetcore:2.0
 
 # Create app directory

@@ -1,4 +1,6 @@
-queue: 'Hosted Linux Preview'
+# YAML file to be used with VSTS CI. The orchestration of build app, test app, and 
+# create docker image happens through the steps defined here.
+# See http://docs.microsoft.com/vsts/pipelines/languages/docker for more information
 variables:
   buildConfiguration: 'Release'
 
@@ -26,5 +28,4 @@ steps:
       arguments: '--configuration $(buildConfiguration) --output out'
       zipAfterPublish: false
 
-# Replace adventworks in the following with the name of your docker id.
   - script: docker build -f Dockerfile -t adventworks/dotnetcore-sample .
