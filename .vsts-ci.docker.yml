@@ -29,3 +29,8 @@ steps:
       zipAfterPublish: false
 
   - script: docker build -f Dockerfile -t adventworks/dotnetcore-sample .
+  
+  - script: |
+      docker-compose -f docs/docker-compose.yml --project-directory . -p docs up -d |
+      docker wait docs_sut_1 |
+      docker-compose -f docs/docker-compose.yml --project-directory . down
