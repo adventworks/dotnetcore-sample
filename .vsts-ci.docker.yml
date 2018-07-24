@@ -28,7 +28,18 @@ steps:
       arguments: '--configuration $(buildConfiguration) --output out'
       zipAfterPublish: false
 
-  - script: docker build -f Dockerfile -t adventworks/dotnetcore-sample .
+  - task: Docker@0
+    displayName: Build an image
+    inputs:
+      containerregistrytype: 'Container Registry'
+      dockerRegistryConnection: 'Adventworks DockerHub'   # change this to the name of your DockerHub service connection
+
+  - task: Docker@0
+    displayName: Push an image
+    inputs:
+      containerregistrytype: 'Container Registry'
+      dockerRegistryConnection: 'Adventworks DockerHub'   # change this to the name of your DockerHub service connection
+      action: 'Push an image'
   
   - script: |
       docker-compose -f docs/docker-compose.yml --project-directory . -p docs up -d |
