@@ -1,49 +1,20 @@
-# YAML file to be used with VSTS CI. The orchestration of build app, test app, and 
-# create docker image happens through the steps defined here.
-# See http://docs.microsoft.com/vsts/pipelines/languages/docker for more information
-queue: Hosted Linux
-
+# Build Docker image for this app
+# http://docs.microsoft.com/vsts/pipelines/languages/docker?view=vsts
+queue: Hosted Linux Preview
 variables:
   buildConfiguration: 'Release'
+  dockerId: adventworks  # change this to match your Docker Id
+  dockerServer: https://index.docker.io/v1  # Docker hub
 
-steps:
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'restore'
-      projects: '**/*.csproj'
-
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'build'
-      projects: '**/*.csproj'
-      arguments: '--configuration $(buildConfiguration)'
-
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'test'
-      projects: '**/*[Tt]ests/*.csproj'
-      arguments: '--configuration $(buildConfiguration)'
-
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'publish'
-      arguments: '--configuration $(buildConfiguration) --output out'
-      zipAfterPublish: false
-
-  - task: Docker@0
-    displayName: Build an image
-    inputs:
-      containerregistrytype: 'Container Registry'
-      dockerRegistryConnection: 'Adventworks DockerHub'   # change this to the name of your DockerHub service connection
-
-  - task: Docker@0
-    displayName: Push an image
-    inputs:
-      containerregistrytype: 'Container Registry'
-      dockerRegistryConnection: 'Adventworks DockerHub'   # change this to the name of your DockerHub service connection
-      action: 'Push an image'
-  
-  - script: |
-      docker-compose -f docs/docker-compose.yml --project-directory . -p docs up -d |
-      docker wait docs_sut_1 |
-      docker-compose -f docs/docker-compose.yml --project-directory . down
+- script: |
+    dotnet build --configuration $(buildConfiguration) |
+    dotnet test dotnetcore-tests --configuration $(buildConfiguration) --logger trx |
+    dotnet publish --configuration $(buildConfiguration) --output out |
+    docker build -t $(dockerId)/dotnetcore-sample:$(Build.BuildId) . |
+    docker login -u $(dockerId) -p $(dockerPassword) $(dockerServer)  # the password is defined as a secret variable in build pipeline
+    docker push $(dockerId)/dotnetcore-sample:$(Build.BuildId)
+    
+- script: |
+    docker-compose -f docs/docker-compose.yml --project-directory . -p docs up -d |
+    docker wait docs_sut_1 |
+    docker-compose -f docs/docker-compose.yml --project-directory . down
