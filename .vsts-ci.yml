@@ -11,28 +11,9 @@ steps:
 #    inputs:
 #      version: '2.1.300'
 
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'restore'
-      projects: '**/*.csproj'
-
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'build'
-      projects: '**/*.csproj'
-      arguments: '--configuration $(buildConfiguration)'
-
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'test'
-      projects: '**/*[Tt]ests/*.csproj'
-      arguments: '--configuration $(buildConfiguration)'
-
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'publish'
-      arguments: '--configuration $(buildConfiguration) --output $(build.artifactStagingDirectory)'
-
+  - script: dotnet build --configuration $(buildConfiguration)
+  - script: dotnet test dotnetcore-tests --configuration $(buildConfiguration) --logger trx
+  - script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
 
 #  - task: AzureRmWebAppDeployment@3
