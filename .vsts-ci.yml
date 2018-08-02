@@ -1,24 +1,18 @@
-# ASP.NET Core
-# Build and test ASP.NET Core web applications targeting .NET Core.
-# https://aka.ms/yaml
+# Build ASP.NET Core project using VSTS
+# https://docs.microsoft.com/vsts/pipelines/languages/dotnet-core?view=vsts
 
 queue: 'Hosted Linux Preview'
 variables:
   buildConfiguration: 'Release'
 
 steps:
-#  - task: DotNetCoreInstaller@0
-#    inputs:
-#      version: '2.1.300'
-
   - script: dotnet build --configuration $(buildConfiguration)
   - script: dotnet test dotnetcore-tests --configuration $(buildConfiguration) --logger trx
-  - script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
-  - task: PublishBuildArtifacts@1
+  - script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)  
 
-#  - task: AzureRmWebAppDeployment@3
-#    inputs:
-#      azureSubscription: <Azure service endpoint>
-#      WebAppName: <Azure web app>
-#      Package: '$(System.ArtifactsDirectory)/**/*.zip'
-#      TakeAppOfflineFlag: true
+  - task: PublishTestResults@2
+    inputs:
+      testRunner: VSTest
+      testResultsFiles: '**/*.trx'
+
+  - task: PublishBuildArtifacts@1
