@@ -7,13 +7,12 @@ variables:
   dockerServer: https://index.docker.io/v1  # Docker hub
 
 steps:
-- script: |
-    dotnet build --configuration $(buildConfiguration) |
-    dotnet test dotnetcore-tests --configuration $(buildConfiguration) --logger trx |
-    dotnet publish --configuration $(buildConfiguration) --output out |
-    docker build -t $(dockerId)/dotnetcore-sample:$BUILD_BUILDID . |
-    docker login -u $(dockerId) -p $(dockerPassword) $(dockerServer) |
-    docker push $(dockerId)/dotnetcore-sample:$BUILD_BUILDID
+- script: dotnet build --configuration $(buildConfiguration)
+- script: dotnet test dotnetcore-tests --configuration $(buildConfiguration) --logger trx
+- script: dotnet publish --configuration $(buildConfiguration) --output out
+- script: docker build -t $(dockerId)/dotnetcore-sample:$BUILD_BUILDID .
+- script: docker login -u $(dockerId) -p $(dockerPassword) $(dockerServer)
+- script: docker push $(dockerId)/dotnetcore-sample:$BUILD_BUILDID
     
 - script: |
     docker-compose -f docs/docker-compose.yml --project-directory . -p docs up -d |
