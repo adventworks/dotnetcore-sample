@@ -4,7 +4,6 @@ queue: Hosted Linux Preview
 variables:
   buildConfiguration: 'Release'
   dockerId: adventworks  # change this to match your Docker Id
-  dockerServer: https://index.docker.io/v1  # Docker hub
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
@@ -12,7 +11,7 @@ steps:
 - script: dotnet publish --configuration $(buildConfiguration) --output out
 - script: docker build -t $(dockerId)/dotnetcore-sample:$BUILD_BUILDID .
 - script: |
-    docker login -u $(dockerId) -p $(dockerPassword) $(dockerServer) |
+    docker login -u $(dockerId) -p $(dockerPassword) |
     docker push $(dockerId)/dotnetcore-sample:$BUILD_BUILDID
     
 - script: |
