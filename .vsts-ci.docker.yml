@@ -11,8 +11,10 @@ steps:
     dotnet test dotnetcore-tests --configuration $(buildConfiguration) --logger trx
     dotnet publish --configuration $(buildConfiguration) --output out
     docker build -t $(dockerId)/dotnetcore-sample:$BUILD_BUILDID .
-    docker login -u $(dockerId) -p $(dockerPassword)
+    docker login -u $(dockerId) -p $pswd
     docker push $(dockerId)/dotnetcore-sample:$BUILD_BUILDID
+  env:
+    pswd: $(dockerPassword)
     
 #- script: |
 #    docker-compose -f docs/docker-compose.yml --project-directory . -p docs up -d |
