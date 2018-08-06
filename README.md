@@ -1,3 +1,4 @@
-# Sample ASP.NET Core application for VSTS and TFS docs
+# Looking for ASP.NET Core sample application for VSTS and TFS docs?
 
-For information on how to use this repository, see [.NET Core](https://docs.microsoft.com/vsts/pipelines/languages/dotnet-core).
+The sample has moved to:
+https://github.com/MicrosoftDocs/pipelines-dotnet-core
