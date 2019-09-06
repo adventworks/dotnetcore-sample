@@ -14,7 +14,7 @@ namespace dotnetcore_tests
           // Arrange
           HomeController controller = new HomeController();
 
-          // Act
+          // Act//test
           ViewResult result = controller.About() as ViewResult;
 
           // Assert
