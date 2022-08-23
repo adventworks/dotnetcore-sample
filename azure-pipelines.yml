@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  name: 'test'
+  name: 'default'
 
 variables:
   solution: '**/*.sln'
